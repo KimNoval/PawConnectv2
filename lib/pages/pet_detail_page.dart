@@ -19,6 +19,7 @@ class PetDetailPage extends StatefulWidget {
   final String location;
   final String description;
   final String ownerName;
+  final bool showAdoptionFormOnOpen;
 
   const PetDetailPage({
     super.key,
@@ -33,6 +34,7 @@ class PetDetailPage extends StatefulWidget {
     this.description =
         'Muffy is a lovable pug who enjoys playing and cuddling. She is well-trained, vaccinated, and looking for a forever home where she can share her affectionate personality.',
     this.ownerName = 'Ayem Lavon',
+    this.showAdoptionFormOnOpen = false,
   });
 
   @override
@@ -90,6 +92,9 @@ class _PetDetailPageState extends State<PetDetailPage> {
   void initState() {
     super.initState();
     _loadFavoriteStatus();
+    if (widget.showAdoptionFormOnOpen) {
+      _showAdoptionForm = true;
+    }
   }
 
   @override

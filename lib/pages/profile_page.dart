@@ -4,6 +4,7 @@ import '../models/user.dart' as app_user;
 import '../services/auth_service.dart';
 import '../widgets/custom_text_field.dart';
 import '../widgets/custom_button.dart';
+import 'chat_list_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -343,6 +344,18 @@ class _ProfilePageState extends State<ProfilePage> {
                 '${_user?.createdAt.day}/${_user?.createdAt.month}/${_user?.createdAt.year}',
               ),
               const SizedBox(height: 40),
+              CustomButton(
+                text: 'Messages',
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ChatListPage(),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 16),
               CustomButton(
                 text: _isSaving ? 'Please wait...' : 'Logout',
                 onPressed: _isSaving ? () {} : _handleLogout,
