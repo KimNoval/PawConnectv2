@@ -97,11 +97,13 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(height: 40),
-              Image.asset(
-                'assets/images/PawConnect.jpg',
-                height: 200,
-                width: 200,
-                fit: BoxFit.contain,
+              ClipOval(
+                child: Image.asset(
+                  'assets/images/PawConnect.jpg',
+                  height: 200,
+                  width: 200,
+                  fit: BoxFit.cover,
+                ),
               ),
               const SizedBox(height: 40),
               const Text('Login', style: AppStyles.heading1),

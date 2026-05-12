@@ -16,7 +16,6 @@ class _AdoptionRequestsPageState extends State<AdoptionRequestsPage> {
 
   List<Map<String, dynamic>> _requests = [];
   bool _isLoading = true;
-  String? _currentUserId;
 
   @override
   void initState() {
@@ -27,7 +26,6 @@ class _AdoptionRequestsPageState extends State<AdoptionRequestsPage> {
   Future<void> _loadRequests() async {
     final user = await _authService.getCurrentUser();
     if (user != null) {
-      _currentUserId = user.id;
       final requests = await _adoptionService.getRequestsForOwner(user.id);
       setState(() {
         _requests = requests;

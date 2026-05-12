@@ -7,7 +7,9 @@ import '../services/pet_storage_service.dart';
 import 'pet_detail_page.dart';
 
 class AllPetsPage extends StatefulWidget {
-  const AllPetsPage({super.key});
+  final String category;
+
+  const AllPetsPage({super.key, required this.category});
 
   @override
   State<AllPetsPage> createState() => _AllPetsPageState();
@@ -139,12 +141,13 @@ class _AllPetsPageState extends State<AllPetsPage> {
                             ),
                           )
                         : GridView.builder(
-                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 12,
-                              mainAxisSpacing: 12,
-                              childAspectRatio: 0.75,
-                            ),
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 12,
+                                  mainAxisSpacing: 12,
+                                  childAspectRatio: 0.65,
+                                ),
                             itemCount: displayedPets.length,
                             itemBuilder: (context, index) {
                               return _buildPetCard(displayedPets[index]);
@@ -171,7 +174,8 @@ class _AllPetsPageState extends State<AllPetsPage> {
               age: pet.age ?? 'Unknown',
               gender: pet.gender ?? 'Unknown',
               image: pet.image,
-              description: pet.description ??
+              description:
+                  pet.description ??
                   'Friendly pet looking for a loving and responsible home.',
               ownerName: pet.ownerName ?? 'Foster Owner',
               location: pet.location ?? 'Cebu City',
@@ -219,7 +223,7 @@ class _AllPetsPageState extends State<AllPetsPage> {
             Expanded(
               flex: 2,
               child: Padding(
-                padding: const EdgeInsets.all(12.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -227,27 +231,27 @@ class _AllPetsPageState extends State<AllPetsPage> {
                     Text(
                       pet.name,
                       style: const TextStyle(
-                        fontSize: 16,
+                        fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: AppColors.darkText,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 2),
                     Text(
                       pet.breed,
                       style: const TextStyle(
-                        fontSize: 12,
+                        fontSize: 11,
                         color: AppColors.darkText,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 2),
                     Text(
                       pet.age ?? 'Unknown',
-                      style: const TextStyle(fontSize: 11, color: Colors.grey),
+                      style: const TextStyle(fontSize: 10, color: Colors.grey),
                     ),
                   ],
                 ),
@@ -261,12 +265,22 @@ class _AllPetsPageState extends State<AllPetsPage> {
 
   Widget _buildPetImage(String image) {
     if (image.isNotEmpty && image.startsWith('assets/')) {
-      return Image.asset(image, fit: BoxFit.cover, width: double.infinity, height: double.infinity);
+      return Image.asset(
+        image,
+        fit: BoxFit.cover,
+        width: double.infinity,
+        height: double.infinity,
+      );
     }
     if (image.isNotEmpty) {
       try {
         final Uint8List bytes = base64Decode(image);
-        return Image.memory(bytes, fit: BoxFit.cover, width: double.infinity, height: double.infinity);
+        return Image.memory(
+          bytes,
+          fit: BoxFit.cover,
+          width: double.infinity,
+          height: double.infinity,
+        );
       } catch (_) {}
     }
     return Center(
@@ -276,11 +290,7 @@ class _AllPetsPageState extends State<AllPetsPage> {
           color: Colors.black26,
           borderRadius: BorderRadius.circular(8),
         ),
-        child: const Icon(
-          Icons.pets,
-          color: Colors.white,
-          size: 30,
-        ),
+        child: const Icon(Icons.pets, color: Colors.white, size: 30),
       ),
     );
   }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import '../constants/colors.dart';
 import '../constants/styles.dart';
-import '../widgets/custom_button.dart';
 import 'adopt_companion_page.dart';
 import 'contact_form_page.dart';
+import 'home_page.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -12,6 +12,18 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
+      appBar: AppBar(
+        backgroundColor: AppColors.background,
+        elevation: 0,
+        title: const Text(
+          'PawConnect',
+          style: TextStyle(
+            color: AppColors.darkText,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -73,9 +85,94 @@ class SplashScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 24),
+              // About Button
+              ElevatedButton(
+                onPressed: () {
+                  print('=== ABOUT BUTTON PRESSED ===');
+                  try {
+                    showAboutDialog(
+                      context: context,
+                      applicationName: 'PawConnect',
+                      applicationVersion: '1.0.0',
+                      applicationIcon: const Icon(Icons.pets, size: 48),
+                      children: const [
+                        Text('Connect to a social space for pet adoption!'),
+                        SizedBox(height: 16),
+                        Text('© 2024 PawConnect'),
+                      ],
+                    );
+                    print('About dialog shown');
+                  } catch (e) {
+                    print('Error showing about dialog: $e');
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('About PawConnect v1.0.0')),
+                    );
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  minimumSize: const Size(double.infinity, 50),
+                ),
+                child: const Text(
+                  'ABOUT',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              // TEST BUTTON - Simple functionality check
+              ElevatedButton(
+                onPressed: () {
+                  print('TEST BUTTON WORKS!');
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Button is working!')),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  minimumSize: const Size(double.infinity, 50),
+                ),
+                child: const Text(
+                  'TEST BUTTON',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              const SizedBox(height: 16),
+              // Go to Home button
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomePage()),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  minimumSize: const Size(double.infinity, 50),
+                ),
+                child: const Text(
+                  'Go to Home',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
               // Send us your info button
-              CustomButton(
-                text: 'Send us your info',
+              ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -84,11 +181,26 @@ class SplashScreen extends StatelessWidget {
                     ),
                   );
                 },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  minimumSize: const Size(double.infinity, 50),
+                ),
+                child: const Text(
+                  'Send us your info',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
               ),
               const SizedBox(height: 16),
               // Explore button - navigate to adopt companion
-              CustomButton(
-                text: 'Explore',
+              ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -97,6 +209,22 @@ class SplashScreen extends StatelessWidget {
                     ),
                   );
                 },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  minimumSize: const Size(double.infinity, 50),
+                ),
+                child: const Text(
+                  'Explore',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
               ),
               const SizedBox(height: 40),
             ],

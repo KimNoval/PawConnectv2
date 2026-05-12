@@ -26,7 +26,9 @@ class _PetListPageState extends State<PetListPage> {
   bool _isLoading = true;
 
   List<Pet> get availablePets {
-    final filteredListed = _listedPets.where((p) => p.category == widget.category).toList();
+    final filteredListed = _listedPets
+        .where((p) => p.category == widget.category)
+        .toList();
     return filteredListed;
   }
 
@@ -60,12 +62,12 @@ class _PetListPageState extends State<PetListPage> {
         actions: [
           Container(
             margin: const EdgeInsets.only(right: 16),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  width: 40,
-                  height: 40,
+                  width: 32,
+                  height: 32,
                   decoration: BoxDecoration(
                     color: AppColors.primary,
                     shape: BoxShape.circle,
@@ -73,15 +75,15 @@ class _PetListPageState extends State<PetListPage> {
                   child: Center(
                     child: Text(
                       widget.categoryIcon,
-                      style: const TextStyle(fontSize: 20),
+                      style: const TextStyle(fontSize: 16),
                     ),
                   ),
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(width: 8),
                 Text(
                   widget.category,
                   style: const TextStyle(
-                    fontSize: 12,
+                    fontSize: 11,
                     fontWeight: FontWeight.w500,
                     color: AppColors.darkText,
                   ),
@@ -128,7 +130,8 @@ class _PetListPageState extends State<PetListPage> {
               age: pet.age ?? 'Unknown',
               gender: pet.gender ?? 'Unknown',
               image: pet.image,
-              description: pet.description ??
+              description:
+                  pet.description ??
                   'Friendly pet looking for a loving and responsible home.',
               ownerName: pet.ownerName ?? 'Foster Owner',
               location: pet.location ?? 'Cebu City',
@@ -246,11 +249,7 @@ class _PetListPageState extends State<PetListPage> {
           color: Colors.black26,
           borderRadius: BorderRadius.circular(8),
         ),
-        child: const Icon(
-          Icons.pets,
-          color: Colors.white,
-          size: 40,
-        ),
+        child: const Icon(Icons.pets, color: Colors.white, size: 40),
       ),
     );
   }

@@ -11,6 +11,8 @@ import 'favorites_page.dart';
 import 'profile_page.dart';
 import 'my_pets_page.dart';
 import 'chat_list_page.dart';
+import 'settings_page.dart';
+import 'splash_screen.dart';
 import '../services/pet_storage_service.dart';
 
 class HomePage extends StatefulWidget {
@@ -75,15 +77,17 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      extendBodyBehindAppBar: true,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.transparent,
+        backgroundColor: AppColors.background,
         automaticallyImplyLeading: false,
         centerTitle: false,
         actions: [
           IconButton(
-            icon: const Icon(Icons.chat_bubble_outline, color: AppColors.darkText),
+            icon: const Icon(
+              Icons.chat_bubble_outline,
+              color: AppColors.darkText,
+            ),
             onPressed: () {
               Navigator.push(
                 context,
@@ -91,18 +95,120 @@ class _HomePageState extends State<HomePage> {
               );
             },
           ),
-          IconButton(
-            icon: const Icon(Icons.menu, color: AppColors.darkText),
-            onPressed: () {},
+          Builder(
+            builder: (context) => IconButton(
+              icon: const Icon(Icons.menu, color: AppColors.darkText),
+              onPressed: () => Scaffold.of(context).openDrawer(),
+            ),
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.only(
-          left: 16.0,
-          right: 16.0,
-          top: kToolbarHeight + 16, // Account for transparent AppBar
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(color: AppColors.primary),
+              child: const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Icon(Icons.pets, size: 48, color: Colors.white),
+                  SizedBox(height: 8),
+                  Text(
+                    'PawConnect',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.home, color: AppColors.primary),
+              title: const Text('Home'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.pets, color: AppColors.primary),
+              title: const Text('All Pets'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AllPetsPage(category: 'All'),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.favorite, color: AppColors.primary),
+              title: const Text('Favorites'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const FavoritesPage(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.person, color: AppColors.primary),
+              title: const Text('Profile'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProfilePage()),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.add_circle, color: AppColors.primary),
+              title: const Text('List My Pet'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MyPetsPage()),
+                );
+              },
+            ),
+            const Divider(),
+            ListTile(
+              leading: const Icon(Icons.settings, color: AppColors.primary),
+              title: const Text('Settings'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SettingsPage()),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.info, color: AppColors.primary),
+              title: const Text('About'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SplashScreen()),
+                );
+              },
+            ),
+          ],
         ),
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -288,7 +394,9 @@ class _HomePageState extends State<HomePage> {
             // Navigate to All Pets page
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const AllPetsPage()),
+              MaterialPageRoute(
+                builder: (context) => AllPetsPage(category: 'All'),
+              ),
             );
           } else if (index == 2) {
             // Navigate to Favorites page
@@ -327,7 +435,8 @@ class _HomePageState extends State<HomePage> {
               age: pet.age ?? 'Unknown',
               gender: pet.gender ?? 'Unknown',
               image: pet.image,
-              description: pet.description ??
+              description:
+                  pet.description ??
                   'Friendly pet looking for a loving and responsible home.',
               ownerName: pet.ownerName ?? 'Foster Owner',
               location: pet.location ?? 'Cebu City',
@@ -432,11 +541,7 @@ class _HomePageState extends State<HomePage> {
           color: Colors.black26,
           borderRadius: BorderRadius.circular(6),
         ),
-        child: const Icon(
-          Icons.pets,
-          color: Colors.white,
-          size: 40,
-        ),
+        child: const Icon(Icons.pets, color: Colors.white, size: 40),
       ),
     );
   }
